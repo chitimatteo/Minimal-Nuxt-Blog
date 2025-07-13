@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-justify-hyphen-lastright {
+  text-align: justify;
+  hyphens: auto;
+  text-align-last: right;
+}
+
+.square-logo {
+  width: 5px;
+  height: 5px;
+  margin-left: 0;
+  @apply inline-block;
+  @apply bg-black;
+  @apply bg-gray-500;
+}
