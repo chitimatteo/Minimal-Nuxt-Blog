@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-none mb-8"
+    class="prose prose-neutral dark:prose-invert max-w-none mb-8"
     v-html="parsed"
   />
 </template>

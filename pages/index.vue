@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-2xl mx-auto px-4">
+  <div class="max-w-xl mx-auto px-4">
 
     <DataState :pending="pending" :error="!!error" :errorMessage="error?.message">
       <div>

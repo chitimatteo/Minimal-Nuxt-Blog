@@ -1,6 +1,13 @@
 /** @type {import('tailwindcss').Config} */
+import typography from '@tailwindcss/typography'
+
 export default {
-  content: [],
+  content: [
+    './components/**/*.{vue,js,ts}',
+    './layouts/**/*.{vue,js,ts}',
+    './pages/**/*.{vue,js,ts}',
+    './app.vue',
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -29,9 +36,27 @@ export default {
           "Sans-Serif",
           "sans-serif",
         ],
-      }
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            h2 : {
+              marginTop: '1rem',
+              marginBottom: '0.75rem',
+            },
+            p : {
+              fontSize: '0.875rem',
+              lineHeight: '1.7',
+              marginTop: '0.75rem',
+              marginBottom: '0.75rem',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    typography
+  ],
 }
 
