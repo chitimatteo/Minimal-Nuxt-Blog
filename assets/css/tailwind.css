@@ -16,3 +16,7 @@
   @apply bg-black;
   @apply bg-gray-500;
 }
+
+.dark h2 {
+  color: #ffffff;
+}

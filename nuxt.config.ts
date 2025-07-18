@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@nuxtjs/i18n',
     '@nuxt/image',
     '@nuxtjs/tailwindcss',
     '@nuxt/fonts',
@@ -16,7 +17,37 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       strapiURL: process.env.STRAPI_URL,
+      siteUrl: process.env.MAIN_URL
     }
+  },
+  i18n: {
+    baseUrl: process.env.MAIN_URL,
+    strategy: 'prefix_except_default', // / per IT, /en per EN
+    defaultLocale: 'it',
+    lazy: true,
+    langDir: 'locales/',
+    detectBrowserLanguage: false,
+    customRoutes: "config",
+    pages: {
+      about: {
+        it: "/chi-sono",
+        en: "/about",
+      },
+    },
+    locales: [
+      {
+        code: 'it',
+        iso: 'it-IT',
+        name: 'Italiano',
+        file: 'it.json'
+      },
+      {
+        code: 'en',
+        iso: 'en-US',
+        name: 'English',
+        file: 'en.json'
+      }
+    ],
   },
   image: {
     domains: [

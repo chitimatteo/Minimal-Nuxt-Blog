@@ -3,9 +3,9 @@
     <article v-if="post">
 
       <div class="max-w-xl mx-auto text-xs pb-2">
-        <span class="text-gray-700">{{ post.category.name }}</span> <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
+        <span class="text-gray-700 dark:text-gray-500">{{ post.category.name }}</span> <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
       </div>
-      <h1 class="max-w-xl mx-auto text-6xl font-bold mb-8 text-gray-900">{{ post.title }}</h1>
+      <h1 class="max-w-xl mx-auto text-6xl font-bold mb-8 text-gray-900 dark:text-gray-100">{{ post.title }}</h1>
 
       <NuxtImg
         v-if="post.cover"

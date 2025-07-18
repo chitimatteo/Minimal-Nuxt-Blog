@@ -24,18 +24,18 @@
       :to="`/blog/${post.slug}`"
       class="block"
     >
-      <h2 class="text-base font-semibold hover:text-gray-700 ease-in-out duration-300">
+      <h2 class="text-base font-semibold hover:text-gray-700 hover:dark:text-gray-300 ease-in-out duration-300">
         {{ post.id }} {{ post.title }}
       </h2>
     </NuxtLink>
     <p
       v-if="post.description && post.description.trim()"
-      class="text-gray-700 text-sm"
+      class="text-gray-700 dark:text-gray-500 text-sm"
     >
       {{ post.description }}
     </p>
     <div class="text-xs pt-2">
-      <span class="text-gray-700">{{ post.category.name }}</span> <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
+      <span class="text-gray-700 dark:text-gray-500">{{ post.category.name }}</span> <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
     </div>
   </article>
 </template>
