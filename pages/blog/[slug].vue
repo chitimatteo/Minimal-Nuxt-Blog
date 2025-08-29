@@ -1,11 +1,14 @@
 <template>
   <div class="max-w-xl mx-auto px-4">
     <article v-if="post">
-
-      <div class="max-w-xl mx-auto text-xs pb-2">
-        <span class="text-gray-700 dark:text-gray-500">{{ post.category.name }}</span> <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
+      <div class="text-xs pb-2">
+        <span class="text-gray-700 dark:text-gray-500">{{ post.category?.name }}</span>
+        <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
       </div>
-      <h1 class="max-w-xl mx-auto text-6xl font-bold mb-8 text-gray-900 dark:text-gray-100">{{ post.title }}</h1>
+
+      <h1 class="text-5xl font-bold mb-8 text-gray-900 dark:text-gray-100">
+        {{ post.title }}
+      </h1>
 
       <NuxtImg
         v-if="post.cover"
@@ -20,7 +23,7 @@
         blur="20"
       />
 
-      <div class="max-w-xl mx-auto">
+      <div>
         <BlockRenderer v-if="post.blocks?.length" :blocks="post.blocks" />
       </div>
     </article>
@@ -33,53 +36,55 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import { useI18n } from '#imports'
 import { useStrapi } from '~/composables/useStrapi'
-import type { Article } from '~/types/article'
 import BlockRenderer from '~/components/blocks/BlockRenderer.vue'
-import type { Block } from '~/types/blocks'
+import type { Article } from '~/types/article'
+import { useCurrentArticle } from '~/composables/useCurrentArticle' // ✅
 
-// 1. Prendo lo slug dalla route
 const route = useRoute()
+const { locale } = useI18n()
 const slug = route.params.slug as string
 
-// 2. Chiamata a Strapi filtrando per slug
-const { data, error } = await useStrapi<Article[]>('articles', {
-  filters: { slug: { $eq: slug } },
+const { data } = await useStrapi<Article[]>('articles', {
+  filters: { slug: { $eq: slug }, locale: { $eq: locale.value } },
   populate: {
     cover: { fields: ['url', 'alternativeText'] },
     category: { fields: ['name', 'slug'] },
-    blocks: true
-  },
+    blocks: true,
+    localizations: { fields: ['slug', 'locale'] }
+  }
 }, {
-  key: `article-${slug}`,
+  key: `article-${slug}-${locale.value}`,
   serverOnly: true,
   revalidate: 60
 })
 
-// 3. Ricavo il primo post della lista
 const post = data.value?.[0]
-
 if (!post) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Post not found',
-    fatal: true
-  })
+  throw createError({ statusCode: 404, statusMessage: `Post not found in locale ${locale.value}`, fatal: true })
 }
 
-// 4. SEO meta
+// ✅ Pubblica l’articolo nello stato globale (lo leggerà lo switcher nell’header)
+const { article } = useCurrentArticle()
+article.value = {
+  slug: post.slug,
+  locale: (post as any).locale,                   // Strapi ritorna `locale`
+  localizations: (post as any).localizations || []
+}
+
+// SEO
 useSeoMeta({
-  title: post?.title,
-  description: post?.description || post?.title,
-  ogType: 'article'
+  title: post.title,
+  description: post.description || post.title,
+  ogType: 'article',
+  ogLocale: locale.value,
+  ogImage: post.cover?.url
 })
 
-// 5. Funzione per formattare la data
 function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-GB', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  return new Date(dateStr).toLocaleDateString(locale.value === 'it' ? 'it-IT' : 'en-GB', {
+    year: 'numeric', month: 'long', day: 'numeric'
   })
 }
 </script>

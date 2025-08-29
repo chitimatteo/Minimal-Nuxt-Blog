@@ -22,9 +22,8 @@ export default defineNuxtConfig({
   },
   i18n: {
     baseUrl: process.env.MAIN_URL,
-    strategy: 'prefix_except_default', // / per IT, /en per EN
+    strategy: 'prefix_except_default',
     defaultLocale: 'it',
-    lazy: true,
     langDir: 'locales/',
     detectBrowserLanguage: false,
     customRoutes: "config",
@@ -48,6 +47,12 @@ export default defineNuxtConfig({
         file: 'en.json'
       }
     ],
+  },
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
   },
   image: {
     domains: [

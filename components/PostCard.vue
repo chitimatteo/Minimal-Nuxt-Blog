@@ -35,7 +35,7 @@
       {{ post.description }}
     </p>
     <div class="text-xs pt-2">
-      <span class="text-gray-700 dark:text-gray-500">{{ post.category.name }}</span> <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
+      <span class="text-gray-700 dark:text-gray-500">{{ post.category?.name }}</span> <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
     </div>
   </article>
 </template>
