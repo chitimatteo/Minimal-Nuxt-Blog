@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/i18n',
+    '@nuxtjs/seo',
     '@nuxt/image',
     '@nuxtjs/tailwindcss',
     '@nuxt/fonts',
@@ -19,6 +20,10 @@ export default defineNuxtConfig({
       strapiURL: process.env.STRAPI_URL,
       siteUrl: process.env.MAIN_URL
     }
+  },
+  site: {
+    url: process.env.MAIN_URL,
+    name: process.env.SITE_NAME
   },
   i18n: {
     baseUrl: process.env.MAIN_URL,
