@@ -1,6 +1,6 @@
 <template>
   <article class="pb-20">
-    <NuxtLink
+    <NuxtLinkLocale
       :to="`/blog/${post.slug}`"
       class="block hover:opacity-90 ease-in-out duration-300"
     >
@@ -18,16 +18,13 @@
         format="webp"
         blur="20"
       />
-    </NuxtLink>
+    </NuxtLinkLocale>
 
-    <NuxtLink
-      :to="`/blog/${post.slug}`"
-      class="block"
-    >
+    <NuxtLinkLocale :to="`/blog/${post.slug}`" class="block">
       <h2 class="text-base font-semibold hover:text-gray-700 hover:dark:text-gray-300 ease-in-out duration-300">
         {{ post.id }} {{ post.title }}
       </h2>
-    </NuxtLink>
+    </NuxtLinkLocale>
     <p
       v-if="post.description && post.description.trim()"
       class="text-gray-700 dark:text-gray-500 text-sm"

@@ -2,10 +2,10 @@
   <div>
     <header class="w-3/12 fixed top-0 left-0 p-12">
       <h1 class="text-base font-medium">
-        <NuxtLink class="hover:text-gray-500 ease-in-out duration-300" :to="localePath('/')">
+        <NuxtLinkLocale class="hover:text-gray-500 ease-in-out duration-300" to="/">
           Matteo Chiti
           <span class="square-logo"></span>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </h1>
       <h2 class="text-sm text-gray-400 pb-6">Digital Creative Director</h2>
 
@@ -30,7 +30,5 @@
 </template>
 
 <script setup>
-import { useLocalePath } from '#imports'
 
-const localePath = useLocalePath()
 </script>

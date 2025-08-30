@@ -4,6 +4,8 @@ import DataState from '~/components/DataState.vue'
 import PostCard from '~/components/PostCard.vue'
 import type { Article } from '~/types/article'
 
+const { locale } = useI18n()
+
 // 1. Leggo il parametro page dalla URL (default: 1)
 const route = useRoute()
 const page = parseInt(route.query.page as string || '1')
@@ -19,8 +21,9 @@ const { data, pending, error } = await useStrapi<Article[]>('articles', {
       },
   },
   sort: ['publishedAt:desc'],
+  locale: locale.value,
 }, {
-  key: 'articles-list',
+  key: `articles-list-${locale.value}`,
   lazy: false,
   revalidate: 60,
   serverOnly: true

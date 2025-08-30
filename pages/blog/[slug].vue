@@ -2,12 +2,12 @@
   <div class="max-w-xl mx-auto px-4">
     <article v-if="post">
       <div class="text-xs pb-2">
-        <span class="text-gray-700 dark:text-gray-500">{{ post.category?.name }}</span>
-        <span class="ml-2 text-gray-400">{{ formatDate(post.publishedAt) }}</span>
+        <span class="text-gray-700 dark:text-gray-500">{{ post?.category?.name }}</span>
+        <span class="ml-2 text-gray-400">{{ formatDate(post?.publishedAt) }}</span>
       </div>
 
       <h1 class="text-5xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-        {{ post.title }}
+        {{ post?.title }}
       </h1>
 
       <NuxtImg
@@ -24,7 +24,7 @@
       />
 
       <div>
-        <BlockRenderer v-if="post.blocks?.length" :blocks="post.blocks" />
+        <BlockRenderer v-if="post?.blocks?.length" :blocks="post?.blocks" />
       </div>
     </article>
 
@@ -89,7 +89,7 @@ useSeoMeta({
 })
 
 function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString(locale.value === 'it' ? 'it-IT' : 'en-GB', {
+  return new Date(dateStr).toLocaleDateString(locale.value === 'it' ? 'it-IT' : 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
