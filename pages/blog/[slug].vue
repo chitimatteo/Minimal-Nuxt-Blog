@@ -60,7 +60,7 @@ const { data } = await useStrapi<Article[]>('articles', {
   revalidate: 60
 })
 
-const post = data.value?.[0]
+const post = (data.value as Article[] | undefined)?.[0]
 if (!post) {
   throw createError({ statusCode: 404, statusMessage: `Post not found in locale ${locale.value}`, fatal: true })
 }

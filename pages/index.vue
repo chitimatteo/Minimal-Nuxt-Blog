@@ -1,26 +1,10 @@
-<template>
-  <div class="max-w-xl mx-auto px-4">
-
-    <DataState :pending="pending" :error="!!error" :errorMessage="error?.message">
-      <div>
-        <PostCard
-          v-for="post in posts"
-          :key="post.id"
-          :post="post"
-        />
-      </div>
-    </DataState>
-
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import DataState from '~/components/DataState.vue'
 import PostCard from '~/components/PostCard.vue'
 import type { Article } from '~/types/article'
 
-// 1. Leggo il parametro `page` dalla URL (default: 1)
+// 1. Leggo il parametro page dalla URL (default: 1)
 const route = useRoute()
 const page = parseInt(route.query.page as string || '1')
 
@@ -50,7 +34,7 @@ if (error.value) {
   })
 }
 
-const posts = data.value || []
+const posts = (data.value || []) as Article[]
 
 useSeoMeta({
   title: 'Matteo Chiti – Blog',
@@ -59,3 +43,19 @@ useSeoMeta({
 })
 
 </script>
+
+<template>
+  <div class="max-w-xl mx-auto px-4">
+
+    <DataState :pending="pending" :error="!!error" :errorMessage="error?.message">
+      <div>
+        <PostCard
+          v-for="post in posts"
+          :key="post.id"
+          :post="post"
+        />
+      </div>
+    </DataState>
+
+  </div>
+</template>

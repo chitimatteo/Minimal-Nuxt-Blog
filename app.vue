@@ -44,7 +44,7 @@ useHead({
 </script>
 
 <template>
-  <div class="bg-white text-black dark:bg-zinc-900 dark:text-white">
+  <div class="min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -52,7 +52,7 @@ useHead({
 </template>
 
 <style global>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
 </style>

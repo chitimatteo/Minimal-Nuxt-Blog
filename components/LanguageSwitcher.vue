@@ -40,7 +40,6 @@ const getLocaleLink = (code) => {
       >
         {{ loc.code }}
       </NuxtLink>
-      {{getLocaleLink(loc.code)}}
     </template>
   </div>
 </template>
