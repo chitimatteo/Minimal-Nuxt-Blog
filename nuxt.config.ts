@@ -32,6 +32,10 @@ export default defineNuxtConfig({
         it: "/chi-sono",
         en: "/about",
       },
+      blog: {
+        it: "/blog/[slug]",
+        en: "/blog/[slug]",
+      }
     },
     locales: [
       {

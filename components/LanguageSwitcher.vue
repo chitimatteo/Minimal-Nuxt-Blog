@@ -1,14 +1,12 @@
 <script setup>
-import { useI18n, useLocalePath } from '#imports'
-import { computed } from 'vue'
+import { useI18n, useLocalePath, useRoute } from '#imports'
 import { useCurrentArticle } from '~/composables/useCurrentArticle'
 
 const localePath = useLocalePath()
 const { locales, locale } = useI18n()
-const { article } = useCurrentArticle() // <-- stato globale
+const { article } = useCurrentArticle()
+const route = useRoute()
 
-// Nome route di pages/blog/[slug].vue (di solito è questo)
-// Se lo hai personalizzato, aggiorna qui.
 const BLOG_ROUTE_NAME = 'blog-slug'
 
 const getLocaleLink = (code) => {
@@ -21,13 +19,12 @@ const getLocaleLink = (code) => {
     if (translated) {
       return localePath({ name: BLOG_ROUTE_NAME, params: { slug: translated.slug } }, code)
     }
-
-    // Se non esiste traduzione, porta almeno alla home della lingua scelta
+    // Nessuna traduzione → home di quella lingua
     return localePath('/', code)
   }
 
-  // Fallback generico (per pagine statiche, listing, ecc.)
-  return localePath('/', code)
+  // ✅ Fallback: stessa pagina (route attuale) nella nuova lingua
+  return localePath(route.fullPath, code)
 }
 </script>
 
@@ -43,6 +40,7 @@ const getLocaleLink = (code) => {
       >
         {{ loc.code }}
       </NuxtLink>
+      {{getLocaleLink(loc.code)}}
     </template>
   </div>
 </template>

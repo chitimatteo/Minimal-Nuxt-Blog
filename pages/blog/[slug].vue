@@ -35,12 +35,12 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { useI18n } from '#imports'
+import { useRoute, onBeforeRouteLeave } from 'vue-router'
+import { useI18n, useSeoMeta, createError } from '#imports'
 import { useStrapi } from '~/composables/useStrapi'
 import BlockRenderer from '~/components/blocks/BlockRenderer.vue'
 import type { Article } from '~/types/article'
-import { useCurrentArticle } from '~/composables/useCurrentArticle' // ✅
+import { useCurrentArticle } from '~/composables/useCurrentArticle'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -65,13 +65,19 @@ if (!post) {
   throw createError({ statusCode: 404, statusMessage: `Post not found in locale ${locale.value}`, fatal: true })
 }
 
-// ✅ Pubblica l’articolo nello stato globale (lo leggerà lo switcher nell’header)
 const { article } = useCurrentArticle()
+
+// ✅ Salva stato articolo
 article.value = {
   slug: post.slug,
-  locale: (post as any).locale,                   // Strapi ritorna `locale`
+  locale: (post as any).locale,
   localizations: (post as any).localizations || []
 }
+
+// ✅ Ripulisci stato quando lasci la pagina articolo
+onBeforeRouteLeave(() => {
+  article.value = null
+})
 
 // SEO
 useSeoMeta({
@@ -84,7 +90,9 @@ useSeoMeta({
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString(locale.value === 'it' ? 'it-IT' : 'en-GB', {
-    year: 'numeric', month: 'long', day: 'numeric'
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   })
 }
 </script>
